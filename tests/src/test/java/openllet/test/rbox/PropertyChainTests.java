@@ -15,6 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntClass;
@@ -573,4 +574,45 @@ public class PropertyChainTests extends AbstractKBTests
 
 		assertTrue(_kb.isType(_d, _D));
 	}
+
+	@Ignore //see https://github.com/Gallosiciliani/openllet-jena5/issues/2
+	@Test
+	public void testTransitivePropertyChainWithABox()
+	{
+
+		classes(_C, _D);
+		objectProperties(_p, _q, _r);
+
+		_kb.addSubProperty(list(_p, _q), _r);
+		_kb.addTransitiveProperty(_r);
+
+		final ATermAppl x=term("x");
+		final ATermAppl x2y=term("x2y");
+		final ATermAppl y=term("y");
+		final ATermAppl y2z=term("y2z");
+		final ATermAppl z=term("z");
+		_kb.addIndividual(x);
+		_kb.addIndividual(x2y);
+		_kb.addIndividual(y);
+		_kb.addIndividual(y2z);
+		_kb.addIndividual(z);
+
+		_kb.addPropertyValue(_p, x, x2y);
+		_kb.addPropertyValue(_q, x2y, y);
+		_kb.addPropertyValue(_p, y, y2z);
+		_kb.addPropertyValue(_q, y2z, z);
+
+		_kb.prepare();
+		final Set<ATermAppl> actualx=_kb.getObjectPropertyValuesSet(_r, x);
+		for(final ATermAppl a:actualx)
+			System.out.println("related with x by r: "+a);
+		final Set<ATermAppl> actualy=_kb.getObjectPropertyValuesSet(_r, y);
+		for(final ATermAppl a:actualy)
+			System.out.println("related with y by r: "+a);
+		assertTrue(actualx.contains(y));
+		assertTrue(actualy.contains(z));
+		//for transitivity of _r ...
+		assertTrue(actualx.contains(z));
+	}
+
 }
