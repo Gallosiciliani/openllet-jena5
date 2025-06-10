@@ -1,3 +1,10 @@
+Openllet jena5 fork
+-------------------
+This is a for of openllet which works with jena 5.3. 
+
+This work has been created in the scope of the project PRIN 2022 PNRR Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily,
+founded by the European Union - Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T; Research Unit of the University of Catania.
+
 Openllet: An Open Source OWL DL reasoner for Java
 -----------------------------------------------
 

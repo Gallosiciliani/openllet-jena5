@@ -6,7 +6,10 @@
   <version>2.6.6</version>
   <packaging>pom</packaging>
   <name>Openllet :: Parent POM</name>
-  <description>Openllet is open-source future of Pellet OWL Reasoner. This is a fork using jena5.</description>
+  <description>Openllet is open-source future of Pellet OWL Reasoner. This is a fork using jena5.
+    This work has been created in the scope of the project PRIN 2022 PNRR Contact-induced change and sociolinguistics: an experimental study on the Gallo-Italic dialects of Sicily,
+    founded by the European Union - Next Generation EU, Mission 4, Component 1, CUP J53D23017360001 - ID P2022YWS8T; Research Unit of the University of Catania.
+  </description>
   <url>https://github.com/Gallosiciliani/openllet-jena5</url>
   <licenses>
     <license>
@@ -38,16 +41,6 @@
     <url>https://github.com/Gallosiciliani/openllet-jena5</url>
   </issueManagement>
 
-<!--  <distributionManagement>-->
-<!--    <snapshotRepository>-->
-<!--       <id>ossrh</id>-->
-<!--       <url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
-<!--    </snapshotRepository>-->
-<!--    <repository>-->
-<!--       <id>ossrh</id>-->
-<!--       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
-<!--    </repository>-->
-<!--  </distributionManagement>-->
 
 
   <scm>
@@ -211,7 +204,31 @@
   <build>
 
   		<plugins>
-
+          <!-- https://central.sonatype.org/publish/publish-portal-maven/#usage -->
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.7.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+            </configuration>
+          </plugin>
+          <!-- https://central.sonatype.org/publish/publish-maven/#gpg-signed-components -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.7</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
